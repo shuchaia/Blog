@@ -20,7 +20,6 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-
     @GetMapping("/list")
     public ResponseResult list() {
         return ResponseResult.okResult(tagService.list());
