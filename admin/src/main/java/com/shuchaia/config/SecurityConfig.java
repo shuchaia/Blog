@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @Version 1.0
  */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -48,15 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-//                .antMatchers("/login").anonymous()
-//                // 注销接口必须认证才能访问
-//                .antMatchers("/logout").authenticated()
-//                // 查看个人信息接口必须认证
-//                .antMatchers("/user/userInfo").authenticated()
+                .antMatchers("/user/login").anonymous()
+                // getInfo接口必须认证才能访问
+                .antMatchers("/getInfo").authenticated()
+                // getRouters接口必须认证
+                .antMatchers("/getRouters").authenticated()
 //                // 头像上传接口必须认证
 //                .antMatchers("/upload").authenticated()
-                // 除上面外的所有请求全部不需要认证即可访问
-                .anyRequest().permitAll();
+                // 所有请求均需要认证才可访问
+                .anyRequest().authenticated();
 
         //配置异常处理器
         http.exceptionHandling()

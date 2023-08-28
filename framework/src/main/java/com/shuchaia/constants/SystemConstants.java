@@ -62,13 +62,31 @@ public class SystemConstants {
      * 评论类型为：友联评论
      */
     public static final String LINK_COMMENT = "1";
-    public static final String MENU = "C";
-    public static final String BUTTON = "F";
+
+    /**
+    * 菜单类型
+    */
+    public static final String MENU_TYPE_MENU = "C";
+    public static final String MENU_TYPE_CATALOG = "M";
+    public static final String MENU_TYPE_BUTTON = "F";
+
     /**
      * 正常状态
      */
     public static final String NORMAL = "0";
     public static final String ADMAIN = "1";
+
+    /**
+    * 菜单状态
+    */
+    public static final String MENU_STATUS_NORMAL = "0";
+    public static final String MENU_STATUS_FORBID = "1";
+
+    /**
+    * 菜单的可视状态
+    */
+    public static final String MENU_VISIBLE = "0";
+    public static final String MENU_HIDE = "1";
 
     /**
      * 在redis中存储了关于viewCount信息的key
