@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -45,7 +46,7 @@ public class OssUploadService implements UploadService {
      * @return
      */
     @Override
-    public ResponseResult uploadImg(MultipartFile img) {
+    public ResponseResult uploadImg(MultipartFile img) throws IOException {
         // 判断文件类型 & 文件大小
         // 判断文件类型：获取原始文件名，对原始文件名进行判断
         String originalFilename = img.getOriginalFilename();

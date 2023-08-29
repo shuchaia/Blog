@@ -14,6 +14,9 @@ import com.shuchaia.service.RoleService;
 import com.shuchaia.utils.BeanCopyUtils;
 import com.shuchaia.utils.SecurityUtils;
 import com.shuchaia.validate.group.LoginGroup;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
+@Api(tags = "后台登录")
 public class LoginController {
     @Autowired
     private LoginService loginService;
@@ -43,6 +47,8 @@ public class LoginController {
 
     @PostMapping("/user/login")
     @SystemLog(businessName = "登录")
+    @ApiOperation(value = "后台登录接口")
+    @ApiImplicitParam(name = "user", value = "前端传来的存有用户名的密码的实体类")
     public ResponseResult login(@RequestBody @Validated(LoginGroup.class) User user) {
 //        if (!StringUtils.hasText(user.getUserName())){
 //            // 提示 必须传用户名
@@ -51,6 +57,11 @@ public class LoginController {
         return loginService.login(user);
     }
 
+    /**
+    * 获得当前用户（根据token）的权限、角色等信息
+    * @param :
+    * @return ResponseResult<AdminUserInfoVo>
+    */
     @GetMapping("/getInfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
         // 获取当前的用户
@@ -67,6 +78,11 @@ public class LoginController {
         return ResponseResult.okResult(vo);
     }
 
+    /**
+    * 获得当前用户的路由信息
+    * @param :
+    * @return ResponseResult
+    */
     @GetMapping("/getRouters")
     public ResponseResult getRouters(){
         // 查询menu 返回结果是tree的形式
@@ -76,5 +92,11 @@ public class LoginController {
         RoutersVo routersVo = new RoutersVo(menus);
 
         return ResponseResult.okResult(routersVo);
+    }
+
+    @PostMapping("/user/logout")
+    @SystemLog(businessName = "后台登出")
+    public ResponseResult logout(){
+        return loginService.logout();
     }
 }

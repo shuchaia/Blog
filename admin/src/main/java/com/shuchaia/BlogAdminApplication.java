@@ -3,6 +3,8 @@ package com.shuchaia;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 /**
  * @ClassName BlogApplication
  * @Description blog后台启动类
@@ -12,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("com.shuchaia.mapper")
+// 启动Swagger2
+@EnableSwagger2
 public class BlogAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogAdminApplication.class, args);

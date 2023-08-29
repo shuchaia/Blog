@@ -1,16 +1,18 @@
 package com.shuchaia.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.shuchaia.constants.SystemConstants;
 import com.shuchaia.domain.entity.LoginUser;
 import com.shuchaia.domain.entity.User;
+import com.shuchaia.mapper.MenuMapper;
 import com.shuchaia.mapper.UserMapper;
-import kotlin.jvm.internal.Lambda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,6 +29,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 根据username从数据库获取数据
@@ -39,8 +44,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         // 返回用户信息
-        // todo 查询权限信息并封装
+        if (user.getType().equals(SystemConstants.ADMAIN)) {
+            // 如果当前用户是管理员
+            List<String> perms = menuMapper.selectPermsByUserId(user.getId());
+            return new LoginUser(user, perms);
+        }
 
-        return new LoginUser(user);
+        return new LoginUser(user, null);
     }
 }

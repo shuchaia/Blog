@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @ClassName PageVo
- * @Description TODO
+ * @Description 封装分页查询数据
  * @Author shuchaia
  * @Date 2023/6/27 19:17
  * @Version 1.0

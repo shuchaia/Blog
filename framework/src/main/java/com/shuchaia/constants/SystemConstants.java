@@ -2,7 +2,7 @@ package com.shuchaia.constants;
 
 /**
  * @ClassName SystemConstants
- * @Description TODO
+ * @Description 项目可能用到的常量
  * @Author shuchaia
  * @Date 2023/6/27 16:05
  * @Version 1.0

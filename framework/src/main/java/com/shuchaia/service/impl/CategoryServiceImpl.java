@@ -6,10 +6,11 @@ import com.shuchaia.constants.SystemConstants;
 import com.shuchaia.domain.ResponseResult;
 import com.shuchaia.domain.entity.Article;
 import com.shuchaia.domain.entity.Category;
+import com.shuchaia.domain.vo.CategoryListVo;
 import com.shuchaia.domain.vo.CategoryVo;
+import com.shuchaia.mapper.CategoryMapper;
 import com.shuchaia.service.ArticleService;
 import com.shuchaia.service.CategoryService;
-import com.shuchaia.mapper.CategoryMapper;
 import com.shuchaia.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
         // 转化为vo
         List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
+        return ResponseResult.okResult(categoryVos);
+    }
+
+    @Override
+    public ResponseResult listAllCategory() {
+        LambdaQueryWrapper<Category> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Category::getStatus, SystemConstants.CATEGORY_STATUS_NORMAL);
+        List<Category> categories = list(lambdaQueryWrapper);
+
+        // 转化为vo
+        List<CategoryListVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryListVo.class);
         return ResponseResult.okResult(categoryVos);
     }
 }

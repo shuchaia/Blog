@@ -6,6 +6,7 @@ import com.shuchaia.domain.entity.User;
 import com.shuchaia.service.LoginService;
 import com.shuchaia.utils.JwtUtil;
 import com.shuchaia.utils.RedisCache;
+import com.shuchaia.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,6 +39,11 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private RedisCache redisCache;
 
+    /**
+    * 登录
+    * @param user:  存有用户名和密码的对象
+    * @return ResponseResult
+    */
     @Override
     public ResponseResult login(User user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
@@ -57,5 +63,18 @@ public class LoginServiceImpl implements LoginService {
         Map<String, String> map = new HashMap<>();
         map.put("token", jwt);
         return ResponseResult.okResult(map);
+    }
+
+    /**
+    * 退出接口
+    * @return 退出成功
+    */
+    @Override
+    public ResponseResult logout() {
+        // 获取userId
+        Long id = SecurityUtils.getUserId();
+        // 删除redis中的用户信息
+        redisCache.deleteObject(LOGIN_KEY + id);
+        return ResponseResult.okResult();
     }
 }

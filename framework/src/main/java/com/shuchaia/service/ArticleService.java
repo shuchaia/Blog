@@ -2,6 +2,8 @@ package com.shuchaia.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.shuchaia.domain.ResponseResult;
+import com.shuchaia.domain.dto.AddArticleDto;
+import com.shuchaia.domain.dto.EditArticleDto;
 import com.shuchaia.domain.entity.Article;
 
 /**
@@ -17,4 +19,12 @@ public interface ArticleService extends IService<Article> {
     ResponseResult getArticleDetail(Long id);
 
     ResponseResult updateViewCount(Long id);
+
+    ResponseResult add(AddArticleDto articleDto);
+
+    ResponseResult listPage(Integer pageNum, Integer pageSize, Article article);
+
+    ResponseResult getInfo(Long id);
+
+    ResponseResult edit(EditArticleDto articleDto);
 }

@@ -1,7 +1,10 @@
 package com.shuchaia.service;
 
-import com.shuchaia.domain.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shuchaia.domain.ResponseResult;
+import com.shuchaia.domain.dto.TagListDto;
+import com.shuchaia.domain.entity.Tag;
+import com.shuchaia.domain.vo.PageVo;
 
 /**
 * @author Wang
@@ -10,4 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TagService extends IService<Tag> {
 
+    ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
+
+    ResponseResult listAllTag();
 }

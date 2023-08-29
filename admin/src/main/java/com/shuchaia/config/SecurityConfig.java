@@ -35,6 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AccessDeniedHandler accessDeniedHandler;
 
+    /**
+    * 返回密码编码器
+    * @param :
+    * @return PasswordEncoder
+    */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -55,14 +60,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/getInfo").authenticated()
                 // getRouters接口必须认证
                 .antMatchers("/getRouters").authenticated()
-//                // 头像上传接口必须认证
-//                .antMatchers("/upload").authenticated()
+                // 退出登录接口必须认证
+                .antMatchers("/user/logout").authenticated()
                 // 所有请求均需要认证才可访问
                 .anyRequest().authenticated();
 
         //配置异常处理器
         http.exceptionHandling()
+                // 认证失败处理器
                 .authenticationEntryPoint(authenticationEntryPoint)
+                // 授权失败处理器
                 .accessDeniedHandler(accessDeniedHandler);
 
 
